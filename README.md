@@ -7,8 +7,8 @@ Feito em **Flutter**.
 
 ## ✨ Funcionalidades
 
-- 🔎 Busca de Pokémon pelo nome ou ID  
-- 📊 Exibição de informações básicas (nome, altura, peso, tipos)  
+- 🔎 Busca de Pokémon pela sequência numérica
+- 📊 Exibição de informações básicas (nome, imagem, id)  
 - 🎨 Interface simples e responsiva  
 
 ---
@@ -45,13 +45,14 @@ flutter run
 
 ## 📸 Exemplo de Uso
 
-🔹 Aperte em Iniciar e após trocar de tela aperte em "Próximo" e veja suas informações básicas retornadas pela API.
+🔹 Aperte em Iniciar e após trocar de tela aperte em "Próximo" e veja as informações básicas de um pokémon retornadas pela API.
 
 ---
 
 ## 🔮 Próximos Passos
 
 - Mostrar habilidades
+- Exibir imagem da versão shiny
 - Barra de pesquisa por nome
 - Mostrar tipagem (fogo, água, etc...)
 
