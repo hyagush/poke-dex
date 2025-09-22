@@ -45,7 +45,7 @@ flutter run
 
 ## 📸 Exemplo de Uso
 
-🔹 Aperte em Iniciar e após trocar de tela aperte em "Próximo" e veja as informações básicas de um pokémon retornadas pela API.
+🔹 Aperte em Iniciar e após trocar de tela aperte em "Próximo" e veja as informações básicas de um Pokémon retornadas pela API.
 
 ---
 
