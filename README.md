@@ -7,9 +7,10 @@ Feito em **Flutter**.
 
 ## ✨ Funcionalidades
 
-- 🔎 Busca de Pokémon pela sequência numérica
-- 📊 Exibição de informações básicas (nome, imagem, id)  
-- 🎨 Interface simples e responsiva  
+- 🔎 Busca de Pokémon pela sequência numérica ou pelo nome
+- 📷 Imagem "Normal" e imagem "Shiny"
+- 📊 Exibição de informações básicas (nome, imagem, id)
+- 🎨 Interface simples e responsiva
 
 ---
 
@@ -45,15 +46,12 @@ flutter run
 
 ## 📸 Exemplo de Uso
 
-🔹 Aperte em Iniciar e após trocar de tela aperte em "Próximo" e veja as informações básicas de um Pokémon retornadas pela API.
+🔹 Aperte em Iniciar e após trocar de tela aperte em "Próximo" ou busque pelo nome/número e veja as informações básicas de um Pokémon retornadas pela API.
 
 ---
 
 ## 🔮 Próximos Passos
 
-- Mostrar habilidades
-- Exibir imagem da versão shiny
-- Barra de pesquisa por nome
 - Mostrar tipagem (fogo, água, etc...)
 
 ---

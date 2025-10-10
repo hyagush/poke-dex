@@ -28,7 +28,7 @@ class HomeState extends Equatable {
   }) {
     return HomeState._(
       status: status ?? this.status,
-      warningMessage: this.warningMessage,
+      warningMessage: warningMessage,
       pokemonList: pokemonList ?? this.pokemonList,
       selectedPokemon: selectedPokemon ?? this.selectedPokemon,
     );

@@ -40,7 +40,7 @@ class CustomSnackbar extends SnackBar {
     return CustomSnackbar(
       content: content,
       icon: Icons.error_outline,
-      backgroundColor: Colors.red[800]!,
+      backgroundColor: const Color.fromARGB(255, 255, 73, 73),
     );
   }
 

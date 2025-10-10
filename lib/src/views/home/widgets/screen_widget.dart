@@ -8,6 +8,7 @@ class ScreenWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ValueNotifier<bool> showShiny = ValueNotifier(false);
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -116,17 +117,86 @@ class ScreenWidget extends StatelessWidget {
               ? Center(
                   child: Text('Nenhum pokémon encontrado'),
                 )
-              : Column(
+              : Stack(
+                  alignment: Alignment.center,
                   children: [
-                    Image.network(
-                      pokemon?.defaultArtwork ?? '',
-                      width: context.percentWidth(35),
+                    Visibility(
+                      visible: pokemon?.shinyArtwork != null,
+                      child: Positioned(
+                        top: 2,
+                        right: 2,
+                        child: InkWell(
+                          onTap: () {
+                            showShiny.value = !showShiny.value;
+                          },
+                          child: ValueListenableBuilder(
+                            valueListenable: showShiny,
+                            builder: (context, value, child) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  gradient: value
+                                      ? SweepGradient(
+                                          colors: [
+                                            Color(0xFFFF3B30).withAlpha(200),
+                                            Color(0xFFFF9500).withAlpha(200),
+                                            Color(0xFFFFD300).withAlpha(200),
+                                            Color(0xFF34C759).withAlpha(200),
+                                            Color(0xFF0A84FF).withAlpha(200),
+                                            Color(0xFF5E5CE6).withAlpha(200),
+                                            Color(0xFFFF2D55).withAlpha(200),
+                                          ],
+                                          startAngle: 0.0,
+                                          endAngle: 6.28,
+                                          transform: GradientRotation(3.14 / 6.28),
+                                        )
+                                      : SweepGradient(
+                                          colors: [
+                                            Color(0xFF808080).withAlpha(200),
+                                            Color(0xFFFFFFFF).withAlpha(200),
+                                            Color(0xFF808080).withAlpha(200),
+                                            Color(0xFFFFFFFF).withAlpha(200),
+                                            Color(0xFF808080).withAlpha(200),
+                                          ],
+                                          startAngle: 0.0,
+                                          endAngle: 6.28,
+                                          transform: GradientRotation(3.14 / 6.28),
+                                        ),
+
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(4),
+                                    topRight: Radius.circular(4),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                                  child: Text(
+                                    value ? 'Shiny' : 'Normal',
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
                     ),
-                    Spacer(),
-                    Text('N° ${pokemon?.id.toString().padLeft(4, '0')}'),
-                    Text(
-                      '${pokemon?.name[0].toUpperCase()}${pokemon?.name.substring(1)}',
-                      style: Theme.of(context).textTheme.headlineLarge,
+                    Column(
+                      children: [
+                        ValueListenableBuilder(
+                          valueListenable: showShiny,
+                          builder: (context, value, child) {
+                            return Image.network(
+                              value ? pokemon?.shinyArtwork ?? '' : pokemon?.defaultArtwork ?? '',
+                              width: context.percentWidth(35),
+                            );
+                          },
+                        ),
+                        Spacer(),
+                        Text('N° ${pokemon?.id.toString().padLeft(4, '0')}'),
+                        Text(
+                          '${pokemon?.name[0].toUpperCase()}${pokemon?.name.substring(1)}',
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                      ],
                     ),
                   ],
                 ),

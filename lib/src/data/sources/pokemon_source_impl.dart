@@ -14,6 +14,7 @@ class PokemonSourceImpl implements PokemonSource {
     try {
       final response = await httpService.unauth().get(
         _endpointPokemonList,
+        queryParameters: {'offset': 0, 'limit': 9999},
       );
       if (response.statusCode == 200) return response.data;
       return null;

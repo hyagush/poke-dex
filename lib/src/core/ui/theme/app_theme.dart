@@ -46,7 +46,9 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        hintStyle: TextStyle(color: Color.fromARGB(255, 50, 107, 58)),
+        alignLabelWithHint: true,
+        hintStyle: TextStyle(color: Color.fromARGB(255, 50, 107, 58), fontSize: 16),
+        suffixIconColor: Color.fromARGB(255, 50, 107, 58),
         contentPadding: const EdgeInsets.all(10),
         isCollapsed: true,
         enabledBorder: OutlineInputBorder(
@@ -67,10 +69,7 @@ class AppTheme {
         ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: _tertiary),
-        ),
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.all(Radius.circular(6)),
         ),
         fillColor: const Color(0xFF52ae5f),
       ),

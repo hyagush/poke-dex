@@ -61,4 +61,51 @@ class HomeController extends Cubit<HomeState> {
       );
     }
   }
+
+  void searchPokemon(String query) {
+    final trimmed = query.trim();
+    if (trimmed.isEmpty) return;
+
+    final maybeId = int.tryParse(trimmed);
+
+    try {
+      if (maybeId != null) {
+        final found = state.pokemonList?.firstWhere((pokemon) => pokemon.id == maybeId);
+
+        if (found != null) {
+          fetchPokemonDetails(found.id);
+          return;
+        }
+      } else {
+        final lowered = trimmed.toLowerCase();
+        final found = state.pokemonList?.firstWhere(
+          (pokemon) => pokemon.name.toLowerCase().contains(lowered),
+        );
+
+        if (found != null) {
+          fetchPokemonDetails(found.id);
+          return;
+        }
+      }
+      emit(
+        state.copyWith(
+          status: HomeStatus.failure,
+          warningMessage: 'Pokémon não encontrado',
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: HomeStatus.failure,
+          warningMessage: 'Pokémon não encontrado',
+        ),
+      );
+    }
+    emit(
+      state.copyWith(
+        status: HomeStatus.initial,
+        warningMessage: null,
+      ),
+    );
+  }
 }

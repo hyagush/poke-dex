@@ -17,12 +17,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _loaderService = Modular.get<LoaderService>();
+  TextEditingController searchEC = TextEditingController();
+  FocusNode searchFocus = FocusNode();
 
   @override
   void initState() {
+    widget.controller.fetchPokemonList().then((_) {
+      widget.controller.fetchPokemonDetails(widget.controller.state.pokemonList?.first.id ?? 0);
+    });
     super.initState();
-    widget.controller.fetchPokemonList();
-    widget.controller.fetchPokemonDetails(widget.controller.state.pokemonList?.first.id ?? 0);
+  }
+
+  @override
+  void dispose() {
+    searchEC.dispose();
+    searchFocus.dispose();
+    super.dispose();
   }
 
   @override
@@ -80,8 +90,19 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     width: context.percentWidth(80),
                     child: TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Procure pelo nome',
+                      controller: searchEC,
+                      focusNode: searchFocus,
+                      onFieldSubmitted: (value) => widget.controller.searchPokemon(value),
+                      decoration: InputDecoration(
+                        hintText: 'Procure pelo nome ou número',
+                        suffixIcon: InkWell(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          child: Icon(Icons.search),
+                          onTap: () {
+                            searchFocus.unfocus();
+                            widget.controller.searchPokemon(searchEC.text);
+                          },
+                        ),
                       ),
                     ),
                   ),
