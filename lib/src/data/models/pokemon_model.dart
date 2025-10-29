@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:poke_dex/src/domain/entities/pokemon_entity.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class PokemonModel {
   final int id;
@@ -54,4 +56,11 @@ class PokemonModel {
       shinyArtwork: shinyArtwork ?? this.shinyArtwork,
     );
   }
+
+  PokemonEntity toEntity() => PokemonEntity(
+    id: id,
+    name: name.replaceFirst(name[0], name[0].toUpperCase()),
+    defaultArtwork: defaultArtwork,
+    shinyArtwork: shinyArtwork,
+  );
 }

@@ -1,23 +1,25 @@
 import 'dart:convert';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:poke_dex/src/core/services/storage/storage_service.dart';
 import 'package:poke_dex/src/data/sources/pokemon_source.dart';
-import 'package:poke_dex/src/domain/models/pokemon_model.dart';
+import 'package:poke_dex/src/data/models/pokemon_model.dart';
+import 'package:poke_dex/src/domain/entities/pokemon_entity.dart';
 import 'package:poke_dex/src/domain/repositories/pokemon_repository.dart';
 
 class PokemonRepositoryImpl extends PokemonRepository {
   final PokemonSource _pokemonSource;
-  final StorageService _storage = Modular.get<StorageService>();
+  final StorageService _storage;
 
-  PokemonRepositoryImpl(this._pokemonSource);
+  PokemonRepositoryImpl({required PokemonSource pokemonSource, required StorageService storage})
+    : _pokemonSource = pokemonSource,
+      _storage = storage;
 
   @override
-  Future<List<PokemonModel>> fetchPokemonList() async {
+  Future<List<PokemonEntity>> fetchPokemonList() async {
     final String storedData = await _storage.getData(key: 'pokemon_list');
 
     if (storedData.isNotEmpty) {
       final List<dynamic> storedList = jsonDecode(storedData);
-      return storedList.map((item) => PokemonModel.fromMap(item)).toList();
+      return storedList.map((item) => PokemonModel.fromMap(item).toEntity()).toList();
     }
 
     final result = await _pokemonSource.fetchPokemonList();
@@ -36,18 +38,18 @@ class PokemonRepositoryImpl extends PokemonRepository {
       );
     }
 
-    return pokemonList;
+    return pokemonList.map((model) => model.toEntity()).toList();
   }
 
   @override
-  Future<PokemonModel> collectPokemonDataById(int id) async {
+  Future<PokemonEntity> collectPokemonDataById(int id) async {
     final detailKey = 'pokemon_detail_$id';
 
     final String storedDetails = await _storage.getData(key: detailKey);
     if (storedDetails.isNotEmpty) {
       final pokemonWithDetails = PokemonModel.fromMap(jsonDecode(storedDetails));
       if (pokemonWithDetails.defaultArtwork.isNotEmpty) {
-        return pokemonWithDetails;
+        return pokemonWithDetails.toEntity();
       }
     }
 
@@ -72,7 +74,7 @@ class PokemonRepositoryImpl extends PokemonRepository {
 
     await _updateMainListInStorage(updatedPokemon);
 
-    return updatedPokemon;
+    return updatedPokemon.toEntity();
   }
 
   Future<PokemonModel?> _getPokemonFromMainList(int id) async {

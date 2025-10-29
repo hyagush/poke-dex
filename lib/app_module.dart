@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:poke_dex/src/core/services/loader/loader_service.dart';
 import 'package:poke_dex/src/core/services/network/http_service.dart';
@@ -16,11 +19,23 @@ class AppModule extends Module {
 
   @override
   void binds(i) {
+    i.addLazySingleton<Dio>(() {
+      final baseOptions = BaseOptions(
+        baseUrl: 'https://pokeapi.co/api/v2',
+        connectTimeout: const Duration(seconds: 10),
+        receiveTimeout: const Duration(seconds: 10),
+      );
+      if (kIsWeb) {
+        return Dio(baseOptions);
+      } else {
+        return DioForNative(baseOptions);
+      }
+    });
+    i.addLazySingleton<HttpService>(() => HttpServiceImpl(i.get<Dio>()));
     i.addLazySingleton<AppTheme>(AppTheme.new);
-    i.addLazySingleton<HttpService>(HttpServiceImpl.new);
     i.addLazySingleton<LoaderService>(LoaderService.new);
     i.addLazySingleton<StorageService>(StorageServiceImpl.new);
-    i.addLazySingleton<PokemonSource>(() => PokemonSourceImpl(Modular.get()));
+    i.addLazySingleton<PokemonSource>(() => PokemonSourceImpl(i.get<HttpService>()));
   }
 
   @override

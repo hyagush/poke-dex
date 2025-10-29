@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:poke_dex/src/core/services/storage/storage_service.dart';
 import 'package:poke_dex/src/data/repositories/pokemon_repository_impl.dart';
 import 'package:poke_dex/src/data/sources/pokemon_source.dart';
 import 'package:poke_dex/src/domain/repositories/pokemon_repository.dart';
@@ -10,7 +11,10 @@ class HomeModule extends Module {
   @override
   void binds(i) {
     i.addLazySingleton<PokemonRepository>(
-      () => PokemonRepositoryImpl(Modular.get<PokemonSource>()),
+      () => PokemonRepositoryImpl(
+        pokemonSource: Modular.get<PokemonSource>(),
+        storage: Modular.get<StorageService>(),
+      ),
     );
     i.addLazySingleton<PokemonUsecase>(() => PokemonUsecase(i.get<PokemonRepository>()));
     i.addLazySingleton(HomeController.new);

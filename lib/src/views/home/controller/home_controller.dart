@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poke_dex/src/domain/models/pokemon_model.dart';
+import 'package:poke_dex/src/domain/entities/pokemon_entity.dart';
 import 'package:poke_dex/src/domain/usecases/pokemon_usecase.dart';
 
 part 'home_state.dart';

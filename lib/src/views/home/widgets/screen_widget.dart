@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:poke_dex/src/core/ui/theme/helpers/size_extensions.dart';
-import 'package:poke_dex/src/domain/models/pokemon_model.dart';
+import 'package:poke_dex/src/domain/entities/pokemon_entity.dart';
 
 class ScreenWidget extends StatelessWidget {
-  final PokemonModel? pokemon;
+  final PokemonEntity? pokemon;
   const ScreenWidget({super.key, required this.pokemon});
 
   @override
@@ -193,7 +193,7 @@ class ScreenWidget extends StatelessWidget {
                         Spacer(),
                         Text('N° ${pokemon?.id.toString().padLeft(4, '0')}'),
                         Text(
-                          '${pokemon?.name[0].toUpperCase()}${pokemon?.name.substring(1)}',
+                          pokemon?.name ?? '{nome inválido}',
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
                       ],
